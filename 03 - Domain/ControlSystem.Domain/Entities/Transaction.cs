@@ -15,5 +15,23 @@ namespace ControlSystem.Domain.Entities
 
         public virtual User User { get; private set; }
         public virtual Category Category { get; private set; }
+
+        public Transaction(string description, decimal value, int transactionType, int categoryId, int userId)
+        {
+            Description = description;
+            Value = value; 
+            TransactionType = transactionType;
+            CategoryId = categoryId;
+            UserId = userId;
+        }
+
+        public void Update(string description, decimal value, int transactionType, int categoryId, int userId)
+        {
+            Description = description;
+            Value = value;
+            TransactionType = transactionType;
+            CategoryId = categoryId;
+            UserId = userId;
+        }
     }
 }

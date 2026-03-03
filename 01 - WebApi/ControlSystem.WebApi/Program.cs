@@ -22,8 +22,13 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 ));
 
 //registro das interfaces
+//User
 builder.Services.AddScoped<IUserAppService, UserAppService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+//Transactions
+builder.Services.AddScoped<ITransactionAppService, TransactionAppService>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 var app = builder.Build();
 
