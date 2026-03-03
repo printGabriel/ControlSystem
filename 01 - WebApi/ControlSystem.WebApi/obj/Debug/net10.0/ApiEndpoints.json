@@ -1,5 +1,74 @@
 [
   {
+    "ContainingType": "ControlSystem.WebApi.Controllers.TransactionController",
+    "Method": "CreateTransaction",
+    "RelativePath": "api/transaction/createTransaction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "ControlSystem.Application.DTOs.TransactionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlSystem.WebApi.Controllers.TransactionController",
+    "Method": "DeleteTransactionById",
+    "RelativePath": "api/transaction/deleteTransactionById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "transactionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlSystem.WebApi.Controllers.TransactionController",
+    "Method": "GetTransactionById",
+    "RelativePath": "api/transaction/getTransactionById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "transactionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlSystem.WebApi.Controllers.TransactionController",
+    "Method": "UpdateTransactionById",
+    "RelativePath": "api/transaction/updateTransaction",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "command",
+        "Type": "ControlSystem.Application.DTOs.TransactionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ControlSystem.WebApi.Controllers.UserController",
     "Method": "CreateUser",
     "RelativePath": "api/user/createUser",
