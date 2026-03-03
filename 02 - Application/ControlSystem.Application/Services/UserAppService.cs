@@ -17,11 +17,11 @@ namespace ControlSystem.Application.Services
             _repository = repository;
         }
 
-        public UserDto CreateUser(UserDto command)
+        public async Task<UserDto> CreateUser(UserDto command)
         {
             var user = new User(command.Name, command.Email, command.BirthDate);
 
-            _repository.Add(user);
+            await _repository.Add(user);
 
             return command;
         }

@@ -15,7 +15,7 @@ namespace ControlSystem.Application.Services
             _repository = repository;
         }
 
-        public TransactionDto CreateTransaction(TransactionDto command)
+        public async Task<TransactionDto> CreateTransaction(TransactionDto command)
         {
             var transaction = new Transaction(
                 command.Description,
@@ -25,7 +25,7 @@ namespace ControlSystem.Application.Services
                 command.UserId
             );
 
-            _repository.Add(transaction);
+            await _repository.Add(transaction);
 
             return command;
         }
