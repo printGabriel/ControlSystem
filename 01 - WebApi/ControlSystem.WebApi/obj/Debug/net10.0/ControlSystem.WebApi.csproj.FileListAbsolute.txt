@@ -162,3 +162,8 @@ C:\ControlSystem\01 - WebApi\ControlSystem.WebApi\obj\Debug\net10.0\ControlSyste
 C:\ControlSystem\01 - WebApi\ControlSystem.WebApi\obj\Debug\net10.0\ControlSystem.WebApi.genruntimeconfig.cache
 C:\ControlSystem\01 - WebApi\ControlSystem.WebApi\obj\Debug\net10.0\ref\ControlSystem.WebApi.dll
 C:\ControlSystem\01 - WebApi\ControlSystem.WebApi\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\ControlSystem\01 - WebApi\ControlSystem.WebApi\bin\Debug\net10.0\ControlSystem.Application.dll
+C:\ControlSystem\01 - WebApi\ControlSystem.WebApi\bin\Debug\net10.0\ControlSystem.Application.pdb
+C:\ControlSystem\01 - WebApi\ControlSystem.WebApi\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\ControlSystem\01 - WebApi\ControlSystem.WebApi\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\ControlSystem\01 - WebApi\ControlSystem.WebApi\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll

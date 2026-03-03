@@ -13,9 +13,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\02 - Application\ControlSystem.Application\ControlSystem.Application.csproj" />
     <ProjectReference Include="..\..\03 - Domain\ControlSystem.Domain\ControlSystem.Domain.csproj" />
     <ProjectReference Include="..\..\04 - Infra\ControlSystem.Infra\ControlSystem.Infra.csproj" />
   </ItemGroup>

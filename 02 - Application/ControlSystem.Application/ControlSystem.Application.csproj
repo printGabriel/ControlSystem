@@ -4,6 +4,10 @@
     <ProjectReference Include="..\..\03 - Domain\ControlSystem.Domain\ControlSystem.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Security\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

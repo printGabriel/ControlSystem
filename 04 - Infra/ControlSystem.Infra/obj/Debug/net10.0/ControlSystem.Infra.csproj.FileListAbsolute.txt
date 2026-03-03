@@ -16,3 +16,5 @@ C:\ControlSystem\04 - Infra\ControlSystem.Infra\obj\Debug\net10.0\refint\Control
 C:\ControlSystem\04 - Infra\ControlSystem.Infra\obj\Debug\net10.0\ControlSystem.Infra.pdb
 C:\ControlSystem\04 - Infra\ControlSystem.Infra\obj\Debug\net10.0\ControlSystem.Infra.genruntimeconfig.cache
 C:\ControlSystem\04 - Infra\ControlSystem.Infra\obj\Debug\net10.0\ref\ControlSystem.Infra.dll
+C:\ControlSystem\04 - Infra\ControlSystem.Infra\bin\Debug\net10.0\ControlSystem.Application.dll
+C:\ControlSystem\04 - Infra\ControlSystem.Infra\bin\Debug\net10.0\ControlSystem.Application.pdb

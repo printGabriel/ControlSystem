@@ -1,0 +1,71 @@
+[
+  {
+    "ContainingType": "ControlSystem.WebApi.Controllers.UserController",
+    "Method": "CreateUser",
+    "RelativePath": "api/user/createUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "ControlSystem.Application.DTOs.UserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlSystem.WebApi.Controllers.UserController",
+    "Method": "DeleteUserById",
+    "RelativePath": "api/user/deleteUserById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlSystem.WebApi.Controllers.UserController",
+    "Method": "GetUserById",
+    "RelativePath": "api/user/getUserById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControlSystem.WebApi.Controllers.UserController",
+    "Method": "UpdateUserById",
+    "RelativePath": "api/user/updateUser",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "command",
+        "Type": "ControlSystem.Application.DTOs.UserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
