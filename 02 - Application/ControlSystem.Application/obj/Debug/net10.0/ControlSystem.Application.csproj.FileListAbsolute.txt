@@ -8,6 +8,7 @@ C:\ControlSystem\02 - Application\ControlSystem.Application\obj\Debug\net10.0\Co
 C:\ControlSystem\02 - Application\ControlSystem.Application\obj\Debug\net10.0\ControlSystem.Application.AssemblyInfoInputs.cache
 C:\ControlSystem\02 - Application\ControlSystem.Application\obj\Debug\net10.0\ControlSystem.Application.AssemblyInfo.cs
 C:\ControlSystem\02 - Application\ControlSystem.Application\obj\Debug\net10.0\ControlSystem.Application.csproj.CoreCompileInputs.cache
+C:\ControlSystem\02 - Application\ControlSystem.Application\obj\Debug\net10.0\ControlSystem.Application.sourcelink.json
 C:\ControlSystem\02 - Application\ControlSystem.Application\obj\Debug\net10.0\ControlS.26A8B191.Up2Date
 C:\ControlSystem\02 - Application\ControlSystem.Application\obj\Debug\net10.0\ControlSystem.Application.dll
 C:\ControlSystem\02 - Application\ControlSystem.Application\obj\Debug\net10.0\refint\ControlSystem.Application.dll
