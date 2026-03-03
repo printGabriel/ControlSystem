@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\02 - Application\ControlSystem.Application\ControlSystem.Application.csproj" />
     <ProjectReference Include="..\..\03 - Domain\ControlSystem.Domain\ControlSystem.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

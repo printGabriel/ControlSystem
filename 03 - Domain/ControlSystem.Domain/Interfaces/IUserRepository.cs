@@ -7,5 +7,9 @@ namespace ControlSystem.Domain.Interfaces
 {
     public interface IUserRepository
     {
+        Task<User> Add(User user);
+        User Get(int id);
+        Task Save();
+        bool Delete(int id);
     }
 }
