@@ -16,9 +16,9 @@ namespace ControlSystem.WebApi.Controllers
 
         [Route("api/transaction/createTransaction")]
         [HttpPost]
-        public IActionResult CreateTransaction(TransactionDto command)
+        public async Task<IActionResult> CreateTransaction(TransactionDto command)
         {
-            var transactionDto = _appService.CreateTransaction(command);
+            var transactionDto = await _appService.CreateTransaction(command);
 
             if (transactionDto == null)
             {

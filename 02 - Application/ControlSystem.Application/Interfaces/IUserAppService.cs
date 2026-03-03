@@ -8,7 +8,7 @@ namespace ControlSystem.Application.Interfaces
 {
     public interface IUserAppService
     {
-        UserDto CreateUser(UserDto command);
+        Task<UserDto> CreateUser(UserDto command);
         UserDto? GetUserById(int userId);
         Task<UserDto?> UpdateUser(UserDto command);
         bool DeleteUserById(int userId);

@@ -22,6 +22,7 @@ namespace ControlSystem.Infra.Repositories
         public async Task<Transaction> Add(Transaction transaction)
         {
             await _context.Transactions.AddAsync(transaction);
+            Console.WriteLine("Salvando transaction...");
             await _context.SaveChangesAsync();
 
             return transaction;

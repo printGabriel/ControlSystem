@@ -16,9 +16,9 @@ namespace ControlSystem.WebApi.Controllers
 
         [Route("api/user/createUser")]
         [HttpPost]
-        public IActionResult CreateUser(UserDto command)
+        public async Task<IActionResult> CreateUser(UserDto command)
         { 
-            var userDto = _appService.CreateUser(command);
+            var userDto = await _appService.CreateUser(command);
 
             if (userDto == null) 
             {
