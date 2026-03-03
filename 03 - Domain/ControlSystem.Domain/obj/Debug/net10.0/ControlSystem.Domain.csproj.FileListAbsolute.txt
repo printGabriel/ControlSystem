@@ -5,6 +5,7 @@ C:\ControlSystem\03 - Domain\ControlSystem.Domain\obj\Debug\net10.0\ControlSyste
 C:\ControlSystem\03 - Domain\ControlSystem.Domain\obj\Debug\net10.0\ControlSystem.Domain.AssemblyInfoInputs.cache
 C:\ControlSystem\03 - Domain\ControlSystem.Domain\obj\Debug\net10.0\ControlSystem.Domain.AssemblyInfo.cs
 C:\ControlSystem\03 - Domain\ControlSystem.Domain\obj\Debug\net10.0\ControlSystem.Domain.csproj.CoreCompileInputs.cache
+C:\ControlSystem\03 - Domain\ControlSystem.Domain\obj\Debug\net10.0\ControlSystem.Domain.sourcelink.json
 C:\ControlSystem\03 - Domain\ControlSystem.Domain\obj\Debug\net10.0\ControlSystem.Domain.dll
 C:\ControlSystem\03 - Domain\ControlSystem.Domain\obj\Debug\net10.0\refint\ControlSystem.Domain.dll
 C:\ControlSystem\03 - Domain\ControlSystem.Domain\obj\Debug\net10.0\ControlSystem.Domain.pdb
