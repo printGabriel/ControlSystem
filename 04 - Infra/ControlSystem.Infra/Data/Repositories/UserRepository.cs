@@ -1,6 +1,8 @@
 ﻿using ControlSystem.Application.DTOs;
 using ControlSystem.Domain.Entities;
+using ControlSystem.Domain.Enums;
 using ControlSystem.Domain.Interfaces;
+using ControlSystem.Domain.Projections;
 using ControlSystem.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +13,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ControlSystem.Infra.Repositories
 {
@@ -47,15 +50,46 @@ namespace ControlSystem.Infra.Repositories
         public bool Delete(int id)
         {
             var user = _context.Users.Where(x => x.Id == id).FirstOrDefault();
+            var userTransactions = _context.Transactions.Where(x => x.UserId == id).ToList();
 
             if (user != null)
             {
                 _context.Remove(user);
+
+                if(userTransactions != null)
+                {
+                    _context.RemoveRange(userTransactions);
+                }
+
                 _context.SaveChanges();
             }
 
-            //tratar exceptions
             return true;
+        }
+
+        public async Task<List<UserFinancialSummary>> GetFinancialSummary()
+        {
+            //Optei por fazer a consulta em LINQ, pois tenho certa familiaridade.
+            using (var ct = _context)
+            {
+                var summary = (from u in ct.Users
+                               join t in ct.Transactions on u.Id equals t.UserId into tQuery
+
+                               select new UserFinancialSummary
+                               {
+                                   UserId = u.Id,
+                                   UserName = u.Name,
+                                   TotalIncome = tQuery
+                                      .Where(t => t.TransactionType == TransactionType.Income)
+                                      .Sum(t => (decimal?)t.Value) ?? 0,
+
+                                   TotalExpense = tQuery
+                                      .Where(t => t.TransactionType == TransactionType.Expense)
+                                      .Sum(t => (decimal?)t.Value) ?? 0,
+                               }).ToListAsync();
+
+                return await summary;
+            }
         }
     }
 }

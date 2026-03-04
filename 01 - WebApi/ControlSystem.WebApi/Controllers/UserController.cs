@@ -14,8 +14,7 @@ namespace ControlSystem.WebApi.Controllers
             _appService = appService;
         }
 
-        [Route("api/user/createUser")]
-        [HttpPost]
+        [HttpPost("api/user/createUser")]
         public async Task<IActionResult> CreateUser(UserDto command)
         { 
             var userDto = await _appService.CreateUser(command);
@@ -29,8 +28,7 @@ namespace ControlSystem.WebApi.Controllers
 
         }
 
-        [Route("api/user/getUserById")]
-        [HttpGet]
+        [HttpGet("api/user/getUserById")]
         public IActionResult GetUserById(int userId)
         {
             var user = _appService.GetUserById(userId);
@@ -44,8 +42,7 @@ namespace ControlSystem.WebApi.Controllers
 
         }
 
-        [Route("api/user/updateUser")]
-        [HttpPut]
+        [HttpPut("api/user/updateUser")]
         public async Task<IActionResult>UpdateUserById(int id, [FromBody]UserDto command)
         {
             if (id != command.Id)
@@ -62,8 +59,7 @@ namespace ControlSystem.WebApi.Controllers
 
         }
 
-        [Route("api/user/deleteUserById")]
-        [HttpGet]
+        [HttpGet("api/user/deleteUserById")]
         public IActionResult DeleteUserById(int userId)
         {
             var deleted = _appService.DeleteUserById(userId);
@@ -75,6 +71,19 @@ namespace ControlSystem.WebApi.Controllers
 
             return Ok(deleted);
 
+        }
+
+        [HttpGet("financial-summary")]
+        public async Task<IActionResult> GetFinancialSummary()
+        {
+            var sumarry = await _appService.GetFinancialSummary();
+
+            if (sumarry == null)
+            {
+                return NotFound();
+            }
+             
+            return Ok(sumarry);
         }
     }
 }
