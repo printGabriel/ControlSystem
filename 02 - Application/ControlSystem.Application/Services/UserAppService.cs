@@ -47,12 +47,12 @@ namespace ControlSystem.Application.Services
         public async Task<UserDto?> UpdateUser(UserDto command)
         {
             var user = _repository.Get(command.Id);
-            
+
             if (user == null)
                 return null;
 
             user.Update(command.Name, command.Email, command.BirthDate);
-            
+
             await _repository.Save();
 
             return new UserDto
@@ -72,6 +72,28 @@ namespace ControlSystem.Application.Services
                 return false;
 
             return true;
+        }
+
+        public async Task<FinancialSummaryResponse> GetFinancialSummary()
+        {
+            var summary = await _repository.GetFinancialSummary();
+
+            var response = new FinancialSummaryResponse();
+
+            response.Users = summary.Select(s => new SummaryDto
+            {
+                UserId = s.UserId,
+                UserName = s.UserName,
+                TotalIncome = s.TotalIncome,
+                TotalExpense = s.TotalExpense,
+                Balance = s.Balance
+            }).ToList();
+
+            response.TotalIncome = summary.Sum(s => s.TotalIncome);
+            response.TotalExpense = summary.Sum(s => s.TotalExpense);
+            response.TotalBalance = response.TotalIncome - response.TotalExpense;
+
+            return response;
         }
     }
 }
