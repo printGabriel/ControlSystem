@@ -22,3 +22,6 @@ publish/
 # OS
 .DS_Store
 Thumbs.db
+
+# Vite cache
+financial-app/.vite/

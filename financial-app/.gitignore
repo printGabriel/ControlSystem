@@ -14,11 +14,13 @@ dist-ssr
 
 # Editor directories and files
 !.vscode/extensions.json
+financial-app/.vite/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
 # Dependencies
 node_modules/
 
