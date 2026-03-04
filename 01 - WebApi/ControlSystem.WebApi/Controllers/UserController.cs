@@ -2,88 +2,72 @@
 using ControlSystem.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControlSystem.WebApi.Controllers
+[ApiController]
+[Route("api/users")]
+public class UserController : ControllerBase
 {
-    [ApiController]
-    public class UserController : ControllerBase
+    private readonly IUserAppService _appService;
+
+    public UserController(IUserAppService appService)
     {
-        private readonly IUserAppService _appService;
+        _appService = appService;
+    }
 
-        public UserController(IUserAppService appService)
-        {
-            _appService = appService;
-        }
+    [HttpPost]
+    public async Task<IActionResult> CreateUser([FromBody] UserDto command)
+    {
+        var userDto = await _appService.CreateUser(command);
 
-        [HttpPost("api/user/createUser")]
-        public async Task<IActionResult> CreateUser(UserDto command)
-        { 
-            var userDto = await _appService.CreateUser(command);
+        if (userDto == null)
+            return BadRequest();
 
-            if (userDto == null) 
-            {
-                return NotFound();
-            }
+        return CreatedAtAction(nameof(GetUserById), new { id = userDto.Id }, userDto);
+    }
 
-            return Ok(userDto);
+    [HttpGet("{id}")]
+    public IActionResult GetUserById(int id)
+    {
+        var user = _appService.GetUserById(id);
 
-        }
+        if (user == null)
+            return NotFound();
 
-        [HttpGet("api/user/getUserById")]
-        public IActionResult GetUserById(int userId)
-        {
-            var user = _appService.GetUserById(userId);
+        return Ok(user);
+    }
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDto command)
+    {
+        if (id != command.Id)
+            return BadRequest("Id diferente do corpo.");
 
-            return Ok(user);
+        var user = await _appService.UpdateUser(command);
 
-        }
+        if (user == null)
+            return NotFound();
 
-        [HttpPut("api/user/updateUser")]
-        public async Task<IActionResult>UpdateUserById(int id, [FromBody]UserDto command)
-        {
-            if (id != command.Id)
-                return BadRequest("Id da rota diferente do corpo da requisição.");
+        return Ok(user);
+    }
 
-            var user = await _appService.UpdateUser(command);
+    [HttpDelete("{id}")]
+    public IActionResult DeleteUser(int id)
+    {
+        var deleted = _appService.DeleteUserById(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+        if (!deleted)
+            return NotFound();
 
-            return Ok(user);
+        return NoContent();
+    }
 
-        }
+    [HttpGet("financial-summary")]
+    public async Task<IActionResult> GetFinancialSummary()
+    {
+        var summary = await _appService.GetFinancialSummary();
 
-        [HttpGet("api/user/deleteUserById")]
-        public IActionResult DeleteUserById(int userId)
-        {
-            var deleted = _appService.DeleteUserById(userId);
+        if (summary == null)
+            return NotFound();
 
-            if (deleted == false)
-            {
-                return NotFound();
-            }
-
-            return Ok(deleted);
-
-        }
-
-        [HttpGet("financial-summary")]
-        public async Task<IActionResult> GetFinancialSummary()
-        {
-            var sumarry = await _appService.GetFinancialSummary();
-
-            if (sumarry == null)
-            {
-                return NotFound();
-            }
-             
-            return Ok(sumarry);
-        }
+        return Ok(summary);
     }
 }

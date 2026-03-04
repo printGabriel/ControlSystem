@@ -1,0 +1,15 @@
+:root {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color:aliceblue;
+  background: linear-gradient(180deg, #363467 0%, rgba(30, 29, 79, 0.8) 100%);
+  min-height: 100vh;
+  width: 100vw;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
