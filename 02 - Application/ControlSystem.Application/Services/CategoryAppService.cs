@@ -1,6 +1,7 @@
 using ControlSystem.Application.DTOs;
 using ControlSystem.Application.Interfaces;
 using ControlSystem.Domain.Entities;
+using ControlSystem.Domain.Enums;
 using ControlSystem.Domain.Interfaces;
 using System.Threading.Tasks;
 

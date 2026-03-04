@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ControlSystem.Domain.Entities;
+﻿using ControlSystem.Domain.Entities;
+using ControlSystem.Domain.Enums;
 using ControlSystem.Domain.Interfaces;
 using ControlSystem.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ControlSystem.Infra.Repositories
@@ -21,8 +22,16 @@ namespace ControlSystem.Infra.Repositories
 
         public async Task<Transaction> Add(Transaction transaction)
         {
+            /* Para não furar a responsabilidade única, adicionei a verificação de idade na entidade User.
+               Dessa forma, apenas faço a chamada e valido junto ao tipo de transação*/
+            var user = await _context.Users.Where(x => x.Id == transaction.UserId).FirstOrDefaultAsync();
+
+            if (user != null && !user.IsAdult(user.BirthDate) && transaction.TransactionType != TransactionType.Expense)
+            {
+                throw new Exception("Usuário deve ser maior de 18 anos.");
+            }
+
             await _context.Transactions.AddAsync(transaction);
-            Console.WriteLine("Salvando transaction...");
             await _context.SaveChangesAsync();
 
             return transaction;

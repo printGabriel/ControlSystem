@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Transactions;
 
 namespace ControlSystem.Domain.Entities
 {
@@ -27,6 +28,16 @@ namespace ControlSystem.Domain.Entities
             Name = name;
             Email = email;
             BirthDate = birthDate;
+        }
+
+        public bool IsAdult(DateOnly birthDate)
+        {
+            if (birthDate > DateOnly.FromDateTime(DateTime.Today).AddYears(-18))
+            {
+                throw new Exception("Usuário deve ser maior de 18 anos.");
+            }
+            else
+                return true;
         }
     }
 }
