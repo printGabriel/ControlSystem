@@ -1,6 +1,7 @@
 using ControlSystem.Application.DTOs;
 using ControlSystem.Application.Interfaces;
 using ControlSystem.Domain.Entities;
+using ControlSystem.Domain.Enums;
 using ControlSystem.Domain.Interfaces;
 using System.Threading.Tasks;
 
@@ -9,14 +10,25 @@ namespace ControlSystem.Application.Services
     public class TransactionAppService : ITransactionAppService
     {
         private readonly ITransactionRepository _repository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public TransactionAppService(ITransactionRepository repository)
+        public TransactionAppService(ITransactionRepository repository, ICategoryRepository categoryRepository)
         {
             _repository = repository;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<TransactionDto> CreateTransaction(TransactionDto command)
         {
+            var category = _categoryRepository.Get(command.CategoryId);
+
+            if (category == null)
+                throw new Exception("Categoria não encontrada.");
+
+
+            if (category.PurposeType != PurposeType.Both && command.TransactionType != (TransactionType)category.PurposeType)
+                throw new Exception("Categoria incompatível.");
+
             var transaction = new Transaction(
                 command.Description,
                 command.Value,
