@@ -4,6 +4,7 @@ obj/
 
 # Visual Studio
 .vs/
+.vscode/
 *.user
 *.suo
 *.userosscache
@@ -17,3 +18,10 @@ obj/
 
 # Publish
 publish/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vite cache
+financial-app/.vite/

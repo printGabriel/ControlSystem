@@ -1,15 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from "react";
-import { api } from "../services/api";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { NavButton } from '../components/NavButton';
-
-interface CreateUser {
-    userName: string;
-    userEmail: string;
-    BirthDate: Date;
-    balance: number;
-}
 
 export function ControlSystemHub() {
   return (

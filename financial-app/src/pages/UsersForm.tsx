@@ -18,9 +18,7 @@ export function UsersForm() {
     }
 
     return (
-
         <div className="container-register">
-
             <form className="center-form">
                 <h1>Cadastro de usuários</h1>
                 <input name="name" type="text" placeholder="Nome" ref={inputName} />

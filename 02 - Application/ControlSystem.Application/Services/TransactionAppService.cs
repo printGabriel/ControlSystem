@@ -26,13 +26,13 @@ namespace ControlSystem.Application.Services
                 throw new Exception("Categoria não encontrada.");
 
 
-            if (category.PurposeType != PurposeType.Both && command.TransactionType != (TransactionType)category.PurposeType)
+            if (category.PurposeType != PurposeType.Both && command.TransactionType != (int)category.PurposeType)
                 throw new Exception("Categoria incompatível.");
 
             var transaction = new Transaction(
                 command.Description,
                 command.Value,
-                command.TransactionType,
+                (TransactionType)command.TransactionType,
                 command.CategoryId,
                 command.UserId
             );
@@ -54,7 +54,7 @@ namespace ControlSystem.Application.Services
                 Id = transaction.Id,
                 Description = transaction.Description,
                 Value = transaction.Value,
-                TransactionType = transaction.TransactionType,
+                TransactionType = (int)transaction.TransactionType,
                 CategoryId = transaction.CategoryId,
                 UserId = transaction.UserId
             };
@@ -70,7 +70,7 @@ namespace ControlSystem.Application.Services
             transaction.Update(
                 command.Description,
                 command.Value,
-                command.TransactionType,
+                (TransactionType)command.TransactionType,
                 command.CategoryId,
                 command.UserId
             );
@@ -82,7 +82,7 @@ namespace ControlSystem.Application.Services
                 Id = transaction.Id,
                 Description = transaction.Description,
                 Value = transaction.Value,
-                TransactionType = transaction.TransactionType,
+                TransactionType = (int)transaction.TransactionType,
                 CategoryId = transaction.CategoryId,
                 UserId = transaction.UserId
             };

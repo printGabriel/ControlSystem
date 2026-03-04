@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControlSystem.WebApi.Controllers
 {
     [ApiController]
+    [Route("api/transactions")]
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionAppService _appService;
@@ -14,9 +15,8 @@ namespace ControlSystem.WebApi.Controllers
             _appService = appService;
         }
 
-        [Route("api/transaction/createTransaction")]
-        [HttpPost]
-        public async Task<IActionResult> CreateTransaction(TransactionDto command)
+        [HttpPost("create-transaction")]
+        public async Task<IActionResult> CreateTransaction([FromBody] TransactionDto command)
         {
             var transactionDto = await _appService.CreateTransaction(command);
 
@@ -28,8 +28,7 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(transactionDto);
         }
 
-        [Route("api/transaction/getTransactionById")]
-        [HttpGet]
+        [HttpGet("get-transaction-by-{id}")]
         public IActionResult GetTransactionById(int transactionId)
         {
             var transaction = _appService.GetTransactionById(transactionId);
@@ -42,8 +41,7 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(transaction);
         }
 
-        [Route("api/transaction/updateTransaction")]
-        [HttpPut]
+        [HttpPut("update-transaction-by-{id}")]
         public async Task<IActionResult> UpdateTransactionById(int id, [FromBody] TransactionDto command)
         {
             if (id != command.Id)
@@ -59,8 +57,7 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(transaction);
         }
 
-        [Route("api/transaction/deleteTransactionById")]
-        [HttpGet]
+        [HttpDelete("delete-transaction-by-{id}")]
         public IActionResult DeleteTransactionById(int transactionId)
         {
             var deleted = _appService.DeleteTransactionById(transactionId);
