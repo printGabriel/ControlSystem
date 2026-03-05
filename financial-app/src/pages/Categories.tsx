@@ -1,44 +1,83 @@
 
-import { useRef } from 'react';
-import { NavButton } from '../components/NavButton';
+import { useEffect, useRef, useState } from 'react';
 import { api } from '../services/api'
+import { useNavigate } from 'react-router-dom';
 import '../App.css'
 
+interface Category {
+    id: number;
+    description: string;
+    purposeType: number;
+}
+
 export function Categories() {
-    const inputName = useRef<HTMLInputElement>(null);
-    const inputEmail = useRef<HTMLInputElement>(null);
-    const inputBirthDate = useRef<HTMLInputElement>(null);
+    const [categories, setCategories] = useState<Category[]>([])
 
-    async function createUser() {
-        await api.post('/users',{
-            Name: inputName.current?.value,
-            Email: inputEmail.current?.value,
-            BirthDate: inputBirthDate.current?.value
-        });
+    async function getCategories() {
+        const categoriesApi = await api.get('/categories/get-all-categories')
 
-        if (inputName.current) {
-            inputName.current.value = "";
-        }
+        setCategories(categoriesApi.data);
+    }
 
-        if (inputEmail.current) {
-            inputEmail.current.value = "";
-        }
+    async function deleteCategory(id: number) {
+        await api.delete(`/categories/${id}`);
+        setCategories(categories.filter(category => category.id !== id));
+    }
 
-        if (inputBirthDate.current) {
-            inputBirthDate.current.value = "";
+    const navigate = useNavigate();
+
+    function editCategory(id: number) {
+        navigate(`/categoriesForm/${id}`);
+    }
+
+    function navi(type: number) {
+
+        switch (type) {
+            case 1: navigate(`/`); break;
+            case 2: navigate(`/categoriesForm/`); break;
         }
     }
 
-    return (
+    useEffect(() => {
+        getCategories()
+    }, [])
+
+    return ( 
         <div className="container-register">
-            <form className="center-form">
-                <h1>Cadastro de usuários</h1>
-                <input name="name" type="text" placeholder="Nome" ref={inputName} />
-                <input name="email" type="email" placeholder="Email" ref={inputEmail} />
-                <input name="birthdate" type="date" ref={inputBirthDate} />
-                <button type="button" onClick={createUser}>Registrar</button>
-                <NavButton className="navButtons" to="/" label="Home" />
-            </form>
+            <div>
+                <button style={{ marginRight: "20px", marginBottom: "10px" }} type="button" onClick={() => navi(2)}>Adicionar categoria</button>
+                <button style={{ marginRight: "226px", marginBottom: "10px", width: "200px" }} type="button" onClick={() => navi(1)}>Início</button>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id:</th>
+                            <th>Descrição:</th>
+                            <th>Finalidade:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {categories.map((category) => (
+                            <tr key={category.id}>
+                                <td>{category.id}</td>
+                                <td>{category.description}</td>
+                                <td>{category.purposeType}</td>
+                                <td>
+                                    <button onClick={() => editCategory(category.id)}>
+                                        Editar
+                                    </button>
+                                </td>
+                                <td>
+                                    <button className="deleteButton" onClick={() => deleteCategory(category.id)}>
+                                        Deletar
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

@@ -48,7 +48,7 @@ export function Transactions() {
     return ( 
         <div className="container-register">
             <div>
-                <button style={{ marginRight: "20px", marginBottom: "10px" }} type="button" onClick={() => navi(2)}>Adicionar usuário</button>
+                <button style={{ marginRight: "20px", marginBottom: "10px" }} type="button" onClick={() => navi(2)}>Adicionar Transação</button>
                 <button style={{ marginRight: "538px", marginBottom: "10px", width: "200px" }} type="button" onClick={() => navi(1)}>Início</button>
             </div>
             <div>

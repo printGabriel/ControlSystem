@@ -28,10 +28,10 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(categoryDto);
         }
 
-        [HttpGet("get-category-by-{id}")]
-        public IActionResult GetCategoryById(int categoryId)
+        [HttpGet("get-category-by-id/{id}")]
+        public IActionResult GetCategoryById(int id)
         {
-            var category = _appService.GetCategoryById(categoryId);
+            var category = _appService.GetCategoryById(id);
 
             if (category == null)
             {
@@ -41,7 +41,18 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(category);
         }
 
-        [HttpPut("update-category-by-{id}")]
+        [HttpGet("get-all-categories")]
+        public IActionResult GetAllCategories()
+        {
+            var category = _appService.GetAllCategories();
+
+            if (category == null)
+                return NotFound();
+
+            return Ok(category);
+        }
+
+        [HttpPut("update-category-by-id/{id}")]
         public async Task<IActionResult> UpdateCategoryById(int id, [FromBody] CategoryDto command)
         {
             if (id != command.Id)
@@ -57,10 +68,10 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(category);
         }
 
-        [HttpGet("delete-category-by-{id}")]
-        public IActionResult DeleteCategoryById(int categoryId)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCategoryById(int id)
         {
-            var deleted = _appService.DeleteCategoryById(categoryId);
+            var deleted = _appService.DeleteCategoryById(id);
 
             if (deleted == false)
             {

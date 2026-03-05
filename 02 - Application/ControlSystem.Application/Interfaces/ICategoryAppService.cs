@@ -7,6 +7,7 @@ namespace ControlSystem.Application.Interfaces
     {
         Task<CategoryDto> CreateCategory(CategoryDto command);
         CategoryDto? GetCategoryById(int categoryId);
+        List<CategoryDto> GetAllCategories();
         Task<CategoryDto?> UpdateCategory(CategoryDto command);
         bool DeleteCategoryById(int categoryId);
     }

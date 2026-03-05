@@ -29,6 +29,12 @@ namespace ControlSystem.Infra.Repositories
             return category;
         }
 
+        public List<Category> GetAll()
+        {
+            var category = _context.Categories.ToList();
+            return category;
+        }
+
         public async Task Save()
         {
             await _context.SaveChangesAsync();

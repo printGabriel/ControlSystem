@@ -24,7 +24,7 @@ function App() {
 
       <Route path="/categoryform" element={<CategoryForm />} />
       <Route path="/categories" element={<Categories />} />
-
+      <Route path="/categoriesform/:id" element={<CategoryForm />} />
     </Routes>
   );
 }
