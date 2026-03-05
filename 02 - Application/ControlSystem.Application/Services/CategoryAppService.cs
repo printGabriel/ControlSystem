@@ -39,6 +39,28 @@ namespace ControlSystem.Application.Services
                 PurposeType = (int)category.PurposeType
             };
         }
+        public List<CategoryDto> GetAllCategories()
+        {
+            var categories = _repository.GetAll();
+
+            if (!categories.Any())
+                return null;
+
+            var categoryDto = new List<CategoryDto>();
+
+            foreach (var c in categories)
+            {
+                categoryDto.Add(new CategoryDto
+                {
+                    Id = c.Id,
+                    Description = c.Description,
+                    PurposeType = (int)c.PurposeType
+                });
+            }
+            ;
+
+            return categoryDto;
+        }
 
         public async Task<CategoryDto?> UpdateCategory(CategoryDto command)
         {

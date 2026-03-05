@@ -7,6 +7,7 @@ namespace ControlSystem.Domain.Interfaces
     {
         Task<Category> Add(Category category);
         Category Get(int id);
+        List<Category> GetAll();
         Task Save();
         bool Delete(int id);
     }
