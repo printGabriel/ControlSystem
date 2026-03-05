@@ -1,44 +1,94 @@
 
-import { useRef } from 'react';
-import { NavButton } from '../components/NavButton';
+import { useEffect, useRef, useState } from 'react';
 import { api } from '../services/api'
+import { useNavigate } from 'react-router-dom';
 import '../App.css'
 
+interface Transaction {
+    id: number;
+    description: string;
+    value: number;
+    transactionType: number;
+    categoryId: number;
+    userId: number;
+}
+
 export function Transactions() {
-    const inputName = useRef<HTMLInputElement>(null);
-    const inputEmail = useRef<HTMLInputElement>(null);
-    const inputBirthDate = useRef<HTMLInputElement>(null);
+    const [transactions, setTransactions] = useState<Transaction[]>([])
 
-    async function createUser() {
-        await api.post('/users',{
-            Name: inputName.current?.value,
-            Email: inputEmail.current?.value,
-            BirthDate: inputBirthDate.current?.value
-        });
+    async function getTransactions() {
+        const transactionsApi = await api.get('/transactions/get-all-transactions')
 
-        if (inputName.current) {
-            inputName.current.value = "";
-        }
+        setTransactions(transactionsApi.data);
+    }
 
-        if (inputEmail.current) {
-            inputEmail.current.value = "";
-        }
+    async function deleteTransaction(id: number) {
+        await api.delete(`/transactions/${id}`);
+        setTransactions(transactions.filter(transaction => transaction.id !== id));
+    }
 
-        if (inputBirthDate.current) {
-            inputBirthDate.current.value = "";
+    const navigate = useNavigate();
+
+    function editTransaction(id: number) {
+        navigate(`/transactionsForm/${id}`);
+    }
+
+    function navi(type: number) {
+
+        switch (type) {
+            case 1: navigate(`/`); break;
+            case 2: navigate(`/transactionsForm/`); break;
         }
     }
 
-    return (
+    useEffect(() => {
+        getTransactions()
+    }, [])
+
+    return ( 
         <div className="container-register">
-            <form className="center-form">
-                <h1>Cadastro de usuários</h1>
-                <input name="name" type="text" placeholder="Nome" ref={inputName} />
-                <input name="email" type="email" placeholder="Email" ref={inputEmail} />
-                <input name="birthdate" type="date" ref={inputBirthDate} />
-                <button type="button" onClick={createUser}>Registrar</button>
-                <NavButton className="navButtons" to="/" label="Home" />
-            </form>
+            <div>
+                <button style={{ marginRight: "20px", marginBottom: "10px" }} type="button" onClick={() => navi(2)}>Adicionar usuário</button>
+                <button style={{ marginRight: "538px", marginBottom: "10px", width: "200px" }} type="button" onClick={() => navi(1)}>Início</button>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id:</th>
+                            <th>Descrição:</th>
+                            <th>Valor:</th>
+                            <th>Tipo de transação</th>
+                            <th>Id da categoria</th>
+                            <th>Id do usuário</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {transactions.map((transaction) => (
+                            <tr key={transaction.id}>
+                                <td>{transaction.id}</td>
+                                <td>{transaction.description}</td>
+                                <td>{transaction.value}</td>
+                                <td>{transaction.transactionType}</td>
+                                <td>{transaction.categoryId}</td>
+                                <td>{transaction.userId}</td>
+                                <td>
+                                    <button onClick={() => editTransaction(transaction.id)}>
+                                        Editar
+                                    </button>
+                                </td>
+                                <td>
+                                    <button className="deleteButton" onClick={() => deleteTransaction(transaction.id)}>
+                                        Deletar
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

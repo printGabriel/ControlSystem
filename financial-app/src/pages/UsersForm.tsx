@@ -4,8 +4,6 @@ import { NavButton } from '../components/NavButton';
 import { api } from '../services/api'
 import '../App.css'
 
-
-
 export function UsersForm() {
     const { id } = useParams();
     const inputName = useRef<HTMLInputElement>(null);
@@ -32,8 +30,8 @@ export function UsersForm() {
     }
 
     async function saveUser() {
-
         let userData = {};
+
         if (id) {
             userData = {
                 Id: Number(id),
@@ -52,7 +50,6 @@ export function UsersForm() {
         if (id) {
             await api.put(`/users/update-user-by-id/${id}`, userData);
         } else {
-            console.log("userdata ", userData);
             await api.post('/users/create-user', userData);
         }
 
@@ -77,8 +74,8 @@ export function UsersForm() {
                     {id ? "Atualizar" : "Registrar"}
                 </button>
 
-                <NavButton className="navButtons" to="/" label="Início" />
                 <NavButton className="navButtons" to="/users" label="Voltar" />
+                <NavButton className="navButtons" to="/" label="Início" />
             </form>
         </div>
     );

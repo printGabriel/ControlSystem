@@ -60,6 +60,32 @@ namespace ControlSystem.Application.Services
             };
         }
 
+        public List<TransactionDto> GetTransactions()
+        {
+            var transactions = _repository.GetAll();
+
+            if (!transactions.Any())
+                return new List<TransactionDto>();
+
+            var transactionsDto = new List<TransactionDto>();
+
+            foreach (var t in transactions)
+            {
+                transactionsDto.Add(new TransactionDto
+                {
+                    Id = t.Id,
+                    Description = t.Description,
+                    Value = t.Value,
+                    TransactionType = (int)t.TransactionType,
+                    CategoryId = t.CategoryId,
+                    UserId = t.UserId
+                });
+
+            };
+
+            return transactionsDto;
+        }
+
         public async Task<TransactionDto?> UpdateTransaction(TransactionDto command)
         {
             var transaction = _repository.Get(command.Id);

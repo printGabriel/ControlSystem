@@ -28,10 +28,10 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(transactionDto);
         }
 
-        [HttpGet("get-transaction-by-{id}")]
-        public IActionResult GetTransactionById(int transactionId)
+        [HttpGet("get-transaction-by-id/{id}")]
+        public IActionResult GetTransactionById(int id)
         {
-            var transaction = _appService.GetTransactionById(transactionId);
+            var transaction = _appService.GetTransactionById(id);
 
             if (transaction == null)
             {
@@ -41,7 +41,20 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(transaction);
         }
 
-        [HttpPut("update-transaction-by-{id}")]
+        [HttpGet("get-all-transactions")]
+        public IActionResult GetTransactions()
+        {
+            var transaction = _appService.GetTransactions();
+
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(transaction);
+        }
+
+        [HttpPut("update-transaction-by-id/{id}")]
         public async Task<IActionResult> UpdateTransactionById(int id, [FromBody] TransactionDto command)
         {
             if (id != command.Id)
@@ -57,15 +70,13 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(transaction);
         }
 
-        [HttpDelete("delete-transaction-by-{id}")]
-        public IActionResult DeleteTransactionById(int transactionId)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTransactionById(int id)
         {
-            var deleted = _appService.DeleteTransactionById(transactionId);
+            var deleted = _appService.DeleteTransactionById(id);
 
-            if (deleted == false)
-            {
+            if (!deleted)
                 return NotFound();
-            }
 
             return Ok(deleted);
         }
