@@ -1,8 +1,8 @@
 import { useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { NavButton } from '../components/NavButton';
-import { api } from '../services/api'
-import '../App.css'
+import { NavButton } from '../../components/NavButton';
+import { api } from '../../services/api'
+import '../../App.css'
 
 export function UsersForm() {
     const { id } = useParams();
@@ -15,52 +15,6 @@ export function UsersForm() {
             getUserById();
         }
     }, [id]);
-
-    async function getUserById() {
-        const response = await api.get(`/users/get-user-by-id/${id}`);
-
-        if (inputName.current)
-            inputName.current.value = response.data.name;
-
-        if (inputEmail.current)
-            inputEmail.current.value = response.data.email;
-
-        if (inputBirthDate.current)
-            inputBirthDate.current.value = response.data.birthDate;
-    }
-
-    async function saveUser() {
-        let userData = {};
-
-        if (id) {
-            userData = {
-                Id: Number(id),
-                Name: inputName.current?.value,
-                Email: inputEmail.current?.value,
-                BirthDate: inputBirthDate.current?.value
-            };
-        } else {
-            userData = {
-                Name: inputName.current?.value,
-                Email: inputEmail.current?.value,
-                BirthDate: inputBirthDate.current?.value
-            }
-        }
-
-        if (id) {
-            await api.put(`/users/update-user-by-id/${id}`, userData);
-        } else {
-            await api.post('/users/create-user', userData);
-        }
-
-        clearFields();
-    }
-
-    function clearFields() {
-        if (inputName.current) inputName.current.value = "";
-        if (inputEmail.current) inputEmail.current.value = "";
-        if (inputBirthDate.current) inputBirthDate.current.value = "";
-    }
 
     return (
         <div className="container-register">
@@ -79,4 +33,65 @@ export function UsersForm() {
             </form>
         </div>
     );
+
+    async function getUserById() {
+        const response = await api.get(`/users/get-user-by-id/${id}`);
+
+        if (inputName.current)
+            inputName.current.value = response.data.name;
+
+        if (inputEmail.current)
+            inputEmail.current.value = response.data.email;
+
+        if (inputBirthDate.current)
+            inputBirthDate.current.value = response.data.birthDate;
+    }
+
+    async function saveUser() {
+        let userData = {};
+
+        if (
+            inputName.current?.value == ""
+            || inputEmail.current?.value == ""
+            || inputBirthDate.current?.value == ""
+        ) {
+            alert("Preencha todos os campos!")
+            return;
+        }
+
+        if (id) {
+            userData = {
+                Id: Number(id),
+                Name: inputName.current?.value,
+                Email: inputEmail.current?.value,
+                BirthDate: inputBirthDate.current?.value
+            };
+        } else {
+            userData = {
+                Name: inputName.current?.value,
+                Email: inputEmail.current?.value,
+                BirthDate: inputBirthDate.current?.value
+            }
+        }
+
+        try {
+            if (id) {
+                await api.put(`/users/update-user-by-id/${id}`, userData);
+            } else {
+                await api.post('/users/create-user', userData);
+            }
+        }
+        catch (error: any) {
+            alert(error.response.data);
+            return;
+        }
+
+        clearFields();
+    }
+
+    function clearFields() {
+        if (inputName.current) inputName.current.value = "";
+        if (inputEmail.current) inputEmail.current.value = "";
+        if (inputBirthDate.current) inputBirthDate.current.value = "";
+    }
 }

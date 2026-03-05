@@ -18,14 +18,21 @@ namespace ControlSystem.WebApi.Controllers
         [HttpPost("create-category")]
         public async Task<IActionResult> CreateCategory(CategoryDto command)
         {
-            var categoryDto = await _appService.CreateCategory(command);
-
-            if (categoryDto == null)
+            try
             {
-                return NotFound();
-            }
+                var categoryDto = await _appService.CreateCategory(command);
 
-            return Ok(categoryDto);
+                if (categoryDto == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(categoryDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("get-category-by-id/{id}")]
@@ -58,14 +65,21 @@ namespace ControlSystem.WebApi.Controllers
             if (id != command.Id)
                 return BadRequest("Id da rota diferente do corpo da requisição.");
 
-            var category = await _appService.UpdateCategory(command);
-
-            if (category == null)
+            try
             {
-                return NotFound();
-            }
+                var category = await _appService.UpdateCategory(command);
 
-            return Ok(category);
+                if (category == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(category);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]

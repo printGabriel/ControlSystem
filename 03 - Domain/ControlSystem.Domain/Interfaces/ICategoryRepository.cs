@@ -10,5 +10,6 @@ namespace ControlSystem.Domain.Interfaces
         List<Category> GetAll();
         Task Save();
         bool Delete(int id);
+        bool DuplicateCategory(int id, string description);
     }
 }

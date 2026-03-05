@@ -1,4 +1,5 @@
 ﻿using ControlSystem.Domain.Entities;
+using ControlSystem.Domain.Projections;
 using System.Threading.Tasks;
 
 namespace ControlSystem.Domain.Interfaces
@@ -7,7 +8,7 @@ namespace ControlSystem.Domain.Interfaces
     {
         Task<Transaction> Add(Transaction transaction);
         Transaction Get(int id);
-        List<Transaction> GetAll();
+        List<TransactionProjection> GetAll();
         Task Save();
         bool Delete(int id);
     }

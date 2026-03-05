@@ -18,12 +18,19 @@ namespace ControlSystem.WebApi.Controllers
         [HttpPost("create-user")]
         public async Task<IActionResult> CreateUser([FromBody] UserDto command)
         {
-            var userDto = await _appService.CreateUser(command);
+            try
+            {
+                var userDto = await _appService.CreateUser(command);
 
-            if (userDto == null)
-                return BadRequest();
+                if (userDto == null)
+                    return BadRequest();
 
-            return Ok(userDto);
+                return Ok(userDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("get-user-by-id/{id}")]
@@ -54,12 +61,19 @@ namespace ControlSystem.WebApi.Controllers
             if (id != command.Id)
                 return BadRequest("Id diferente do corpo.");
 
-            var user = await _appService.UpdateUser(command);
+            try
+            {
+                var user = await _appService.UpdateUser(command);
 
-            if (user == null)
-                return NotFound();
+                if (user == null)
+                    return NotFound();
 
-            return Ok(user);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("delete-user-by-{id}")]

@@ -1,6 +1,8 @@
-﻿using ControlSystem.Domain.Entities;
+﻿using ControlSystem.Application.DTOs;
+using ControlSystem.Domain.Entities;
 using ControlSystem.Domain.Enums;
 using ControlSystem.Domain.Interfaces;
+using ControlSystem.Domain.Projections;
 using ControlSystem.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,6 +26,7 @@ namespace ControlSystem.Infra.Repositories
         {
             /* Para não furar a responsabilidade única, adicionei a verificação de idade na entidade User.
                Dessa forma, apenas faço a chamada e valido junto ao tipo de transação*/
+
             var user = await _context.Users.Where(x => x.Id == transaction.UserId).FirstOrDefaultAsync();
 
             if (user != null && !user.IsAdult(user.BirthDate) && transaction.TransactionType != TransactionType.Expense)
@@ -44,11 +47,28 @@ namespace ControlSystem.Infra.Repositories
             return transaction;
         }
 
-        public List<Transaction> GetAll()
+        public List<TransactionProjection> GetAll()
         {
-            var transaction = _context.Transactions.ToList();
+            using (var ct = _context)
+            {
+                var transaction = (from t in ct.Transactions
+                                   join c in ct.Categories on t.CategoryId equals c.Id
+                                   join u in ct.Users on t.UserId equals u.Id
 
-            return transaction;
+                                   select new TransactionProjection
+                                   {
+                                       Id = t.Id,
+                                       Description = t.Description,
+                                       Value = t.Value,
+                                       TransactionType = (int)t.TransactionType,
+                                       CategoryId = t.CategoryId,
+                                       CategoryName = c.Description,
+                                       UserId = t.UserId,
+                                       UserName = u.Name,
+                                   }).ToList();
+
+                return transaction;
+            }
         }
 
         public async Task Save()

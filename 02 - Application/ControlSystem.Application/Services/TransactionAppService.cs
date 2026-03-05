@@ -60,7 +60,7 @@ namespace ControlSystem.Application.Services
             };
         }
 
-        public List<TransactionDto> GetTransactions()
+        public List<TransactionDto> GetAllTransactions()
         {
             var transactions = _repository.GetAll();
 
@@ -76,9 +76,11 @@ namespace ControlSystem.Application.Services
                     Id = t.Id,
                     Description = t.Description,
                     Value = t.Value,
-                    TransactionType = (int)t.TransactionType,
                     CategoryId = t.CategoryId,
-                    UserId = t.UserId
+                    TransactionType = t.TransactionType,
+                    CategoryName = t.CategoryName,
+                    UserId = t.UserId,
+                    UserName = t.UserName
                 });
 
             };
@@ -88,6 +90,16 @@ namespace ControlSystem.Application.Services
 
         public async Task<TransactionDto?> UpdateTransaction(TransactionDto command)
         {
+
+            var category = _categoryRepository.Get(command.CategoryId);
+
+            if (category == null)
+                throw new Exception("Categoria não encontrada.");
+
+
+            if (category.PurposeType != PurposeType.Both && command.TransactionType != (int)category.PurposeType)
+                throw new Exception("Categoria incompatível.");
+
             var transaction = _repository.Get(command.Id);
 
             if (transaction == null)
