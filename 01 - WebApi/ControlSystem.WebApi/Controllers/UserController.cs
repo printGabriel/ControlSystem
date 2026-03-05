@@ -15,7 +15,7 @@ namespace ControlSystem.WebApi.Controllers
             _appService = appService;
         }
 
-        [HttpPost]
+        [HttpPost("create-user")]
         public async Task<IActionResult> CreateUser([FromBody] UserDto command)
         {
             var userDto = await _appService.CreateUser(command);
@@ -23,10 +23,10 @@ namespace ControlSystem.WebApi.Controllers
             if (userDto == null)
                 return BadRequest();
 
-            return CreatedAtAction(nameof(GetUserById), new { id = userDto.Id }, userDto);
+            return Ok(userDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get-user-by-id/{id}")]
         public IActionResult GetUserById(int id)
         {
             var user = _appService.GetUserById(id);
@@ -37,7 +37,18 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(user);
         }
 
-        [HttpPut("{id}")]
+        [HttpGet("get-all-users")]
+        public IActionResult GetUsers()
+        {
+            var user = _appService.GetUsers();
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
+
+        [HttpPut("update-user-by-id/{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDto command)
         {
             if (id != command.Id)
@@ -51,7 +62,7 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(user);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete-user-by-{id}")]
         public IActionResult DeleteUser(int id)
         {
             var deleted = _appService.DeleteUserById(id);

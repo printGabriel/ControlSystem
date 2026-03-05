@@ -16,11 +16,11 @@ namespace ControlSystem.Application.Services
             _repository = repository;
         }
 
-        public CategoryDto CreateCategory(CategoryDto command)
+        public async Task<CategoryDto> CreateCategory(CategoryDto command)
         {
-            var category = new Category(command.Description, command.PurposeType);
+            var category = new Category(command.Description, (PurposeType)command.PurposeType);
 
-            _repository.Add(category);
+            await _repository.Add(category);
 
             return command;
         }
@@ -36,7 +36,7 @@ namespace ControlSystem.Application.Services
             {
                 Id = category.Id,
                 Description = category.Description,
-                PurposeType = category.PurposeType
+                PurposeType = (int)category.PurposeType
             };
         }
 
@@ -47,7 +47,7 @@ namespace ControlSystem.Application.Services
             if (category == null)
                 return null;
 
-            category.Update(command.Description, command.PurposeType);
+            category.Update(command.Description, (PurposeType)command.PurposeType);
 
             await _repository.Save();
 
@@ -55,7 +55,7 @@ namespace ControlSystem.Application.Services
             {
                 Id = category.Id,
                 Description = category.Description,
-                PurposeType = category.PurposeType
+                PurposeType = (int)category.PurposeType
             };
         }
 

@@ -66,15 +66,28 @@ button:hover {
 
 .container-register {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding-top: 120px;
+  align-items: center;
+  min-height: 10vh;
+  padding-top: 100px;
 }
 
 .financial-summary{
     display: flex;
   justify-content: center;
+}
+
+.deleteButton{
+    font-family: "Poppins", sans-serif;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  background: linear-gradient(10deg, #9c0000 0%, hsl(345, 100%, 67%) 100%);
+  transition: 0.3s ease;
 }
 
 .container {
@@ -84,4 +97,19 @@ button:hover {
   justify-content: flex-start;
   min-height: 100vh;
   padding-top: 100px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #4a4d68;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+th {
+  background-color: #4a4d68;
 }

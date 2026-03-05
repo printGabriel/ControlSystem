@@ -11,6 +11,7 @@ namespace ControlSystem.Application.Interfaces
     {
         Task<UserDto> CreateUser(UserDto command);
         UserDto? GetUserById(int userId);
+        List<UserDto?> GetUsers();
         Task<UserDto?> UpdateUser(UserDto command);
         bool DeleteUserById(int userId);
         Task<FinancialSummaryResponse> GetFinancialSummary();
