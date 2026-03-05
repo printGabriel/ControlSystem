@@ -10,6 +10,7 @@ namespace ControlSystem.Domain.Interfaces
     {
         Task<User> Add(User user);
         User Get(int id);
+        List<User> GetAll();
         Task Save();
         bool Delete(int id);
         Task<List<UserFinancialSummary>> GetFinancialSummary();

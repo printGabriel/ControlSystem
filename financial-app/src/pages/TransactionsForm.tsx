@@ -19,6 +19,26 @@ export function TransactionsForm() {
             CategoryId: inputCategoryId.current?.value,
             UserId: inputUserId.current?.value,
         });
+
+        if (inputDescription.current) {
+            inputDescription.current.value = "";
+        }
+
+        if (inputValue.current) {
+            inputValue.current.value = "";
+        }
+
+        if (inputTransactionType.current) {
+            inputTransactionType.current.value = "";
+        }
+
+        if (inputCategoryId.current) {
+            inputCategoryId.current.value = "";
+        }
+
+        if (inputUserId.current) {
+            inputUserId.current.value = "";
+        }
     }
 
     return (

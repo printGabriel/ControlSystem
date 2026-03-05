@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControlSystem.WebApi.Controllers
 {
     [ApiController]
+    [Route("api/categories/")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryAppService _appService;
@@ -14,11 +15,10 @@ namespace ControlSystem.WebApi.Controllers
             _appService = appService;
         }
 
-        [Route("api/category/createCategory")]
-        [HttpPost]
-        public IActionResult CreateCategory(CategoryDto command)
+        [HttpPost("create-category")]
+        public async Task<IActionResult> CreateCategory(CategoryDto command)
         {
-            var categoryDto = _appService.CreateCategory(command);
+            var categoryDto = await _appService.CreateCategory(command);
 
             if (categoryDto == null)
             {
@@ -28,8 +28,7 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(categoryDto);
         }
 
-        [Route("api/category/getCategoryById")]
-        [HttpGet]
+        [HttpGet("get-category-by-{id}")]
         public IActionResult GetCategoryById(int categoryId)
         {
             var category = _appService.GetCategoryById(categoryId);
@@ -42,8 +41,7 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(category);
         }
 
-        [Route("api/category/updateCategory")]
-        [HttpPut]
+        [HttpPut("update-category-by-{id}")]
         public async Task<IActionResult> UpdateCategoryById(int id, [FromBody] CategoryDto command)
         {
             if (id != command.Id)
@@ -59,8 +57,7 @@ namespace ControlSystem.WebApi.Controllers
             return Ok(category);
         }
 
-        [Route("api/category/deleteCategoryById")]
-        [HttpGet]
+        [HttpGet("delete-category-by-{id}")]
         public IActionResult DeleteCategoryById(int categoryId)
         {
             var deleted = _appService.DeleteCategoryById(categoryId);

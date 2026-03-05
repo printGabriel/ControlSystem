@@ -37,8 +37,14 @@ namespace ControlSystem.Infra.Repositories
         public User Get(int id)
         {
             var user = _context.Users.Where(x => x.Id == id).FirstOrDefault();
+            
+            return user;
+        }
 
-            //tratar exceptions
+        public List<User> GetAll()
+        {
+            var user = _context.Users.ToList();
+
             return user;
         }
 

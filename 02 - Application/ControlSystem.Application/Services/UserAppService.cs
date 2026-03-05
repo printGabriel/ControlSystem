@@ -44,6 +44,31 @@ namespace ControlSystem.Application.Services
             };
         }
 
+        public List<UserDto> GetUsers()
+        {
+            var users = _repository.GetAll();
+
+            if (!users.Any())
+            {
+                return new List<UserDto>();
+            }
+
+            var usersDto = new List<UserDto>();
+
+            foreach (var u in users)
+            {
+                usersDto.Add(new UserDto
+                {
+                    Id = u.Id,
+                    Name = u.Name,
+                    Email = u.Email,
+                    BirthDate = u.BirthDate
+                });
+            }
+
+            return usersDto;
+        }
+
         public async Task<UserDto?> UpdateUser(UserDto command)
         {
             var user = _repository.Get(command.Id);
