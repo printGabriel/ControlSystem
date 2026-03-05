@@ -73,11 +73,14 @@ namespace ControlSystem.Application.Services
         {
             var user = _repository.Get(command.Id);
 
+            //Verifica se existe algum usuário com o e-mail informado.
+            _repository.DuplicateEmail(command.Email, command.Id);
+
             if (user == null)
                 return null;
 
             user.Update(command.Name, command.Email, command.BirthDate);
-
+            
             await _repository.Save();
 
             return new UserDto
@@ -111,7 +114,7 @@ namespace ControlSystem.Application.Services
                 UserName = s.UserName,
                 TotalIncome = s.TotalIncome,
                 TotalExpense = s.TotalExpense,
-                Balance = s.Balance
+                Balance = s.TotalIncome - s.TotalExpense
             }).ToList();
 
             response.TotalIncome = summary.Sum(s => s.TotalIncome);

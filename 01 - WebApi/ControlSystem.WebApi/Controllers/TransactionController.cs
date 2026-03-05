@@ -18,14 +18,21 @@ namespace ControlSystem.WebApi.Controllers
         [HttpPost("create-transaction")]
         public async Task<IActionResult> CreateTransaction([FromBody] TransactionDto command)
         {
-            var transactionDto = await _appService.CreateTransaction(command);
-
-            if (transactionDto == null)
+            try
             {
-                return NotFound();
-            }
+                var transactionDto = await _appService.CreateTransaction(command);
 
-            return Ok(transactionDto);
+                if (transactionDto == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(transactionDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("get-transaction-by-id/{id}")]
@@ -44,7 +51,7 @@ namespace ControlSystem.WebApi.Controllers
         [HttpGet("get-all-transactions")]
         public IActionResult GetTransactions()
         {
-            var transaction = _appService.GetTransactions();
+            var transaction = _appService.GetAllTransactions();
 
             if (transaction == null)
             {
@@ -59,15 +66,22 @@ namespace ControlSystem.WebApi.Controllers
         {
             if (id != command.Id)
                 return BadRequest("Id da rota diferente do corpo da requisição.");
-
-            var transaction = await _appService.UpdateTransaction(command);
-
-            if (transaction == null)
+            try
             {
-                return NotFound();
-            }
+                var transaction = await _appService.UpdateTransaction(command);
 
-            return Ok(transaction);
+                if (transaction == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(transaction);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]

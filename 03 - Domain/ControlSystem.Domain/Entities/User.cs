@@ -34,7 +34,7 @@ namespace ControlSystem.Domain.Entities
         {
             if (birthDate > DateOnly.FromDateTime(DateTime.Today).AddYears(-18))
             {
-                throw new Exception("Usuário deve ser maior de 18 anos.");
+                return false;
             }
             else
                 return true;

@@ -14,5 +14,6 @@ namespace ControlSystem.Domain.Interfaces
         Task Save();
         bool Delete(int id);
         Task<List<UserFinancialSummary>> GetFinancialSummary();
+        bool DuplicateEmail(string email, int id);
     }
 }

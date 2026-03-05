@@ -54,7 +54,7 @@ namespace ControlSystem.Application.Services
                 {
                     Id = c.Id,
                     Description = c.Description,
-                    PurposeType = (int)c.PurposeType
+                    PurposeType = (int)c.PurposeType,
                 });
             }
             ;
@@ -64,6 +64,7 @@ namespace ControlSystem.Application.Services
 
         public async Task<CategoryDto?> UpdateCategory(CategoryDto command)
         {
+            var duplicate = _repository.DuplicateCategory(command.Id, command.Description);
             var category = _repository.Get(command.Id);
 
             if (category == null)

@@ -28,6 +28,9 @@ namespace ControlSystem.Infra.Repositories
 
         public async Task<User> Add(User user)
         {
+            DuplicateEmail(user.Email, user.Id);
+
+
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
@@ -75,7 +78,6 @@ namespace ControlSystem.Infra.Repositories
 
         public async Task<List<UserFinancialSummary>> GetFinancialSummary()
         {
-            //Optei por fazer a consulta em LINQ, pois tenho certa familiaridade.
             using (var ct = _context)
             {
                 var summary = (from u in ct.Users
@@ -96,6 +98,16 @@ namespace ControlSystem.Infra.Repositories
 
                 return await summary;
             }
+        }
+
+        public bool DuplicateEmail(string email, int id)
+        {
+            var user = _context.Users.Where(x => x.Id != id && x.Email == email).FirstOrDefaultAsync();
+
+            if (user != null)
+                throw new Exception("Já existe um usuário com o e-mail informado!");
+
+            return false;
         }
     }
 }

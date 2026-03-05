@@ -1,6 +1,8 @@
 using ControlSystem.Domain.Entities;
+using ControlSystem.Domain.Enums;
 using ControlSystem.Domain.Interfaces;
 using ControlSystem.Infra.Data.Context;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,6 +19,8 @@ namespace ControlSystem.Infra.Repositories
 
         public async Task<Category> Add(Category category)
         {
+            DuplicateCategory(category.Id, category.Description);
+
             await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
 
@@ -51,6 +55,16 @@ namespace ControlSystem.Infra.Repositories
             }
 
             return true;
+        }
+
+        public bool DuplicateCategory(int id, string description)
+        {
+            var category = _context.Categories.Where(x => x.Id != id && x.Description == description).FirstOrDefault();
+
+            if (category != null)
+                throw new Exception("Já existe uma categoria com a descrição informada!");
+
+            return false;
         }
     }
 }
