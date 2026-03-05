@@ -44,6 +44,13 @@ namespace ControlSystem.Infra.Repositories
             return transaction;
         }
 
+        public List<Transaction> GetAll()
+        {
+            var transaction = _context.Transactions.ToList();
+
+            return transaction;
+        }
+
         public async Task Save()
         {
             await _context.SaveChangesAsync();

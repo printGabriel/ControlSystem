@@ -30,11 +30,7 @@ export function Users() {
     function editUser(id: number) {
         navigate(`/users/${id}`);
     }
-
-    function addUser() {
-
-    }
-
+    
     function navi(type: number) {
 
         switch (type) {

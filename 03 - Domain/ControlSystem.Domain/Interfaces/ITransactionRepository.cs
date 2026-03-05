@@ -7,6 +7,7 @@ namespace ControlSystem.Domain.Interfaces
     {
         Task<Transaction> Add(Transaction transaction);
         Transaction Get(int id);
+        List<Transaction> GetAll();
         Task Save();
         bool Delete(int id);
     }

@@ -13,8 +13,8 @@ export function ControlSystemHub() {
                 <NavButton className='navButton' to="categoryform" label="Adicionar categorias" />
                 <NavButton className='navButton' to="/financialsummary" label="Sumário de transações" /> */}
                 <NavButton className='navButton' to="/users" label="Usuários" />
-                <NavButton className='navButton' to="/transactionsform" label="Transações" />
-                <NavButton className='navButton' to="categoryform" label="Categorias" />
+                <NavButton className='navButton' to="/transactions" label="Transações" />
+                <NavButton className='navButton' to="categories" label="Categorias" />
                 <NavButton className='navButton' to="/financialsummary" label="Sumário de transações" />
             </nav>
         </div>

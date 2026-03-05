@@ -13,13 +13,18 @@ function App() {
     <Routes>
       <Route path="/" element={<ControlSystemHub />} />
       <Route path="/usersform" element={<UsersForm />} />
-      {/* <Route path="/financialsummary" element={<FinancialSummary />} /> */}
-      <Route path="/transactionsform" element={<TransactionsForm />} />
-      <Route path="/categoryform" element={<CategoryForm />} />
       <Route path="/users" element={<Users />} />
-      <Route path="/categories" element={<Categories />} />
-      <Route path="/transactions" element={<Transactions />} />
       <Route path="/users/:id" element={<UsersForm />} />
+
+      {/* <Route path="/financialsummary" element={<FinancialSummary />} /> */}
+
+      <Route path="/transactionsform" element={<TransactionsForm />} />
+      <Route path="/transactions" element={<Transactions />} />
+      <Route path="/transactionsform/:id" element={<TransactionsForm />} />
+
+      <Route path="/categoryform" element={<CategoryForm />} />
+      <Route path="/categories" element={<Categories />} />
+
     </Routes>
   );
 }
