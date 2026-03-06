@@ -4,18 +4,22 @@ import { NavButton } from '../../components/NavButton';
 import { api } from '../../services/api'
 import '../../App.css'
 
+// formulário utilizado para adicionar um novo usuário
 export function UsersForm() {
+    // const para receber o valor de um id caso a tela seja acessada para edição
     const { id } = useParams();
     const inputName = useRef<HTMLInputElement>(null);
     const inputEmail = useRef<HTMLInputElement>(null);
     const inputBirthDate = useRef<HTMLInputElement>(null);
 
+    //chamada do método caso tenha um id na requisição
     useEffect(() => {
         if (id) {
             getUserById();
         }
     }, [id]);
 
+    //retorno do formulário para preenchimento de um novo usuário
     return (
         <div className="container-register">
             <form className="center-form">
@@ -28,14 +32,16 @@ export function UsersForm() {
                     {id ? "Atualizar" : "Registrar"}
                 </button>
 
+                {/* botões de navegção para voltar a página anterior ou início */}
                 <NavButton className="navButtons" to="/users" label="Voltar" />
                 <NavButton className="navButtons" to="/" label="Início" />
             </form>
         </div>
     );
 
+    //função utilizada para puxar via api, os dados do usuário para edição
     async function getUserById() {
-        const response = await api.get(`/users/get-user-by-id/${id}`);
+        const response = await api.get(`/users/${id}`);
 
         if (inputName.current)
             inputName.current.value = response.data.name;
@@ -47,9 +53,11 @@ export function UsersForm() {
             inputBirthDate.current.value = response.data.birthDate;
     }
 
+    //função para salvar a ação na tela
     async function saveUser() {
         let userData = {};
-
+        var create = null;
+        //caso algum campo não tenha sido preenchido, um alerta é disparado pedindo o preenchimento
         if (
             inputName.current?.value == ""
             || inputEmail.current?.value == ""
@@ -59,6 +67,8 @@ export function UsersForm() {
             return;
         }
 
+        //tive que fazer essa condição um pouco rápido, não é o ideal, mas...
+        //para edição envia Id, para create não envia.
         if (id) {
             userData = {
                 Id: Number(id),
@@ -74,11 +84,13 @@ export function UsersForm() {
             }
         }
 
+        // verifica se há algum erro e altera o usuário caso o parâmetro venha com id ou cria
+        //um usuário caso não venha com id
         try {
             if (id) {
-                await api.put(`/users/update-user-by-id/${id}`, userData);
+                await api.put(`/users/${id}`, userData);
             } else {
-                await api.post('/users/create-user', userData);
+                create = await api.post('/users', userData);
             }
         }
         catch (error: any) {
@@ -86,7 +98,9 @@ export function UsersForm() {
             return;
         }
 
-        clearFields();
+        //caso seja create, zera os campos por meio da função abaixo
+        if (create != null)
+            clearFields();
     }
 
     function clearFields() {

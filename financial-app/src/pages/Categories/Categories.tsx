@@ -4,16 +4,19 @@ import { api } from '../../services/api'
 import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 
+//interface para tipar as propriedades do objeto vindo do banco
 interface Category {
     id: number;
     description: string;
     purposeTypeName: string;
 }
 
+//função utilizada para listar todas as categorias em uma tabela
 export function Categories() {
     const [categories, setCategories] = useState<Category[]>([])
     const navigate = useNavigate();
 
+    //chamada da função que busca categorias no banco
     useEffect(() => {
         getCategories()
     }, [])
@@ -36,6 +39,7 @@ export function Categories() {
                             <tr key={category.id}>
                                 <td>{category.id}</td>
                                 <td>{category.description}</td>
+                                {/* formatação caso para pt/Br da finalidade da categoria */}
                                 <td>{category.purposeTypeName == "Income" ? "Receita" : "Despesa"}</td>
                                 <td>
                                     <button onClick={() => editCategory(category.id)}>
@@ -58,20 +62,25 @@ export function Categories() {
             </div>
         </div>
     );
+
+    //função para buscar categorias
      async function getCategories() {
-        const categoriesApi = await api.get('/categories/get-all-categories')
+        const categoriesApi = await api.get('/categories/')
         setCategories(categoriesApi.data);
     }
 
+    //função para deletar categorias pelo id
     async function deleteCategory(id: number) {
         await api.delete(`/categories/${id}`);
         setCategories(categories.filter(category => category.id !== id));
     }
 
+    //função utilizada para acessar o formulário de edição de uma categoria, passando seu id 
     function editCategory(id: number) {
         navigate(`/categoriesForm/${id}`);
     }
 
+    //pequena função com switch case pra navegar para o início ou formulário
     function navi(type: number) {
 
         switch (type) {

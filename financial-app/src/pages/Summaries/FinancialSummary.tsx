@@ -3,6 +3,7 @@ import { api } from "../../services/api";
 import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 
+//interface para tipar as propriedades dos objetos vindos do banco.
 interface SummaryDto {
   userId: number,
   userName: string,
@@ -18,25 +19,16 @@ interface Summary {
   totalBalance: number
 }
 
+// tabela de apresentação do sumário financeiro
 export function FinancialSummary() {
   const [summaries, setSummaries] = useState<Summary | null>(null)
-
   const navigate = useNavigate();
-
-  function returnHome() {
-    navigate("/");
-  }
-
-  async function getSummaries() {
-    const summaries = await api.get("/users/financial-summary");
-
-    setSummaries(summaries.data);
-  }
 
   useEffect(() => {
     getSummaries();
   }, []);
 
+  //returno da função principal com tabela de informações de usuários e informações de valores gerais
   return (
     <div>
       <div className="summary-all">
@@ -69,6 +61,7 @@ export function FinancialSummary() {
               <tr key={summary.userId}>
                 <td>{summary.userId}</td>
                 <td>{summary.userName}</td>
+                {/* formatação para $real */}
                 <td>{summary.totalIncome.toLocaleString('pt-BR', {
                   style: 'currency',
                   currency: 'BRL'
@@ -91,4 +84,16 @@ export function FinancialSummary() {
       </div>
     </div>
   );
+
+    // função para voltar ao início
+  function returnHome() {
+    navigate("/");
+  }
+
+  //função utilizada para buscar pelas informações de sumário
+  async function getSummaries() {
+    const summaries = await api.get("/users/financial-summary");
+
+    setSummaries(summaries.data);
+  }
 }

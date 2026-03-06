@@ -9,12 +9,14 @@ export function CategoryForm() {
     const inputDescription = useRef<HTMLInputElement>(null);
     const inputPurposeType = useRef<HTMLSelectElement>(null);
 
+    //chamada da função para buscar categoria pelo id, caso a tela tenha sido acessada com um identificador.
     useEffect(() => {
         if (id) {
             getCategoryById();
         }
     }, [id]);
 
+    //retorno da função principal, formulário de registro de categoria
     return (
         <div className="container-register">
             <form className="center-form">
@@ -25,6 +27,7 @@ export function CategoryForm() {
                     <option value="1">Despesa</option>
                     <option value="2">Receita</option>
                 </select>
+                {/* aqui ele valida se a tela foi acessada com id ou não e mostra atualizar ou registrar de acordo. */}
                 <button type="button" onClick={saveCategory}>
                     {id ? "Atualizar" : "Registrar"}
                 </button>
@@ -34,9 +37,10 @@ export function CategoryForm() {
             </form>
         </div>
     );
-    
+
+    //função para buscar a categoria pelo id, caso a tela tenha sido chamada por edição
     async function getCategoryById() {
-        const response = await api.get(`/categories/get-category-by-id/${id}`);
+        const response = await api.get(`/categories/${id}`);
 
         if (inputDescription.current)
             inputDescription.current.value = response.data.description;
@@ -45,9 +49,12 @@ export function CategoryForm() {
             inputPurposeType.current.value = response.data.purposeType.toString();
     }
 
+    //função utilizada para salvar as ações na tela:
     async function saveCategory() {
         let categoryData = {};
+        var create = null;
 
+        //caso o usuário não tenha preenchido algum campo, um alerta é disparado
         if (
             inputDescription.current?.value == ""
             || inputPurposeType.current?.value == ""
@@ -56,6 +63,7 @@ export function CategoryForm() {
             return;
         }
 
+        //condição abaixo segue a mesma ideia da tela de usuários para registrar ou editar uma transação
         if (id) {
             categoryData = {
                 Id: Number(id),
@@ -68,11 +76,13 @@ export function CategoryForm() {
                 PurposeType: inputPurposeType.current?.value
             }
         }
+        //caso a tela tenha sido chamada pela edição, registra o que foi alterado,
+        // caso tenha sido chamada para novo registro, executa essa ação
         try {
             if (id) {
-                await api.put(`/categories/update-category-by-id/${id}`, categoryData);
+                await api.put(`/categories/${id}`, categoryData);
             } else {
-                await api.post('/categories/create-category', categoryData);
+                create = await api.post('/categories/', categoryData);
 
             }
         } catch (error: any) {
@@ -80,7 +90,9 @@ export function CategoryForm() {
             return;
         }
 
-        clearFields();
+        //limpa os campos caso a ação seja criação
+        if (create != null)
+            clearFields();
     }
 
     function clearFields() {
