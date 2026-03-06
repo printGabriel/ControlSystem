@@ -1,6 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+//Componente utilizado como botão de navegação
+
+//definição da tipagem das propriedades do botão
 interface NavButtonProps {
   to: string; 
   label: string; 
@@ -10,11 +13,11 @@ interface NavButtonProps {
 export const NavButton: React.FC<NavButtonProps> = ({ to, label, className }) => {
   const navigate = useNavigate();
 
-
   const handleNavigation = () => {
     navigate(to);
   };
 
+  //retorno do botão
   return (
     <button 
       onClick={handleNavigation} 

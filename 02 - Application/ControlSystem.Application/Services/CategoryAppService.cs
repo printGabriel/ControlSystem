@@ -9,6 +9,7 @@ namespace ControlSystem.Application.Services
 {
     public class CategoryAppService : ICategoryAppService
     {
+        // Repositório responsável pelo acesso aos dados das categorias
         private readonly ICategoryRepository _repository;
 
         public CategoryAppService(ICategoryRepository repository)
@@ -18,6 +19,7 @@ namespace ControlSystem.Application.Services
 
         public async Task<CategoryDto> CreateCategory(CategoryDto command)
         {
+            // Cria a entidade de domínio com os dados da dto
             var category = new Category(command.Description, (PurposeType)command.PurposeType);
 
             await _repository.Add(category);
@@ -25,6 +27,7 @@ namespace ControlSystem.Application.Services
             return command;
         }
 
+        // busca a categoria pelo id
         public CategoryDto? GetCategoryById(int categoryId)
         {
             var category = _repository.Get(categoryId);
@@ -32,6 +35,7 @@ namespace ControlSystem.Application.Services
             if (category == null)
                 return null;
 
+            // Converte a entidade para DTO
             return new CategoryDto
             {
                 Id = category.Id,
@@ -39,15 +43,18 @@ namespace ControlSystem.Application.Services
                 PurposeType = (int)category.PurposeType
             };
         }
+
+        //busca por todas as categorias
         public List<CategoryDto> GetAllCategories()
         {
             var categories = _repository.GetAll();
 
             if (!categories.Any())
-                return null;
+                return new List<CategoryDto>();
 
             var categoryDto = new List<CategoryDto>();
 
+            // Converte a lista de entidades para DTO
             foreach (var c in categories)
             {
                 categoryDto.Add(new CategoryDto
@@ -56,20 +63,23 @@ namespace ControlSystem.Application.Services
                     Description = c.Description,
                     PurposeType = (int)c.PurposeType,
                 });
-            }
-            ;
+            };
 
             return categoryDto;
         }
 
         public async Task<CategoryDto?> UpdateCategory(CategoryDto command)
         {
+            // Verifica se já existe categoria com a mesma descrição e já retorna erro caso encontre
             var duplicate = _repository.DuplicateCategory(command.Id, command.Description);
+
             var category = _repository.Get(command.Id);
 
+            //caso não encontre a categoria
             if (category == null)
                 return null;
 
+            // Atualiza os dados da entidade
             category.Update(command.Description, (PurposeType)command.PurposeType);
 
             await _repository.Save();
@@ -82,6 +92,7 @@ namespace ControlSystem.Application.Services
             };
         }
 
+        //remove a categoria pelo seu id
         public bool DeleteCategoryById(int categoryId)
         {
             var deleted = _repository.Delete(categoryId);
